@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Play Scope — boost.ai solution design</title>
+<meta name="description" content="An animated explainer on scoping a voice expansion: where the moment breaks, what good looks like, and the North Star it points at.">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#1B0720">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Play Scope — boost.ai solution design">
+<meta property="og:description" content="Scope is a decision, not a list. An animated explainer in nine scenes.">
+<link rel="preload" href="assets/fonts/bricolage-400-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/nunito-400-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/plexmono-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/fonts.css">
+<script>document.documentElement.classList.add("js")</script>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ── Icon sprite ─────────────────────────────────────────── -->
+<svg class="sprite" aria-hidden="true" focusable="false"><defs>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M9 5.5v13M15 5.5v13" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-prev" viewBox="0 0 24 24"><path d="M15 5.5l-8 6.5 8 6.5z" fill="currentColor"/><path d="M6 5.5v13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><path d="M9 5.5l8 6.5-8 6.5z" fill="currentColor"/><path d="M18 5.5v13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-restart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4h-4"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-call" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 3.5h3l1.5 4-2 1.4a12 12 0 0 0 5.6 5.6l1.4-2 4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 3.5 5.7a2 2 0 0 1 2-2.2z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.2V12l3.2 2"/></symbol>
+  <symbol id="i-ask" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5a2.5 2.5 0 0 1-2.5 2.5H9l-4.5 3.5V6.5A2.5 2.5 0 0 1 7 4h10.5A2.5 2.5 0 0 1 20 6.5z"/><path d="M10.4 9.2a2 2 0 1 1 2.6 2.2v1.1"/><path d="M13 14.9v.1"/></symbol>
+  <symbol id="i-coin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><ellipse cx="12" cy="7" rx="7.5" ry="3.2"/><path d="M4.5 7v10c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2V7"/><path d="M4.5 12c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2"/></symbol>
+  <symbol id="i-seat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.4"/><path d="M5 19.5a7 7 0 0 1 14 0"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.8"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-data" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><ellipse cx="12" cy="5.6" rx="7" ry="2.8"/><path d="M5 5.6v12.8c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8V5.6"/><path d="M5 12c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4v16h16"/><path d="M4 12h16M12 4v16"/><circle cx="16.5" cy="7.5" r="1.6" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 3.5l4 4L8 20H4v-4z"/><path d="M13.5 6.5l4 4"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 2.6l2.9 6 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5L2.6 9.5l6.5-.9z"/></symbol>
+  <symbol id="i-note" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4.5 4.5h15v10l-5 5h-10z"/><path d="M19.5 14.5h-5v5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l5 5 10-11"/></symbol>
+  <symbol id="i-q" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M8.8 8.8a3.3 3.3 0 1 1 4.3 3.6v2.1"/><path d="M13 18.2v.1"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="M13.5 6.5L19 12l-5.5 5.5"/></symbol>
+  <symbol id="i-voice" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="2.8" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0"/><path d="M12 18v3.2"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M20 13.8a2.6 2.6 0 0 1-2.6 2.6H9l-4.4 3.4V6.4A2.6 2.6 0 0 1 7.2 3.8h10.2A2.6 2.6 0 0 1 20 6.4z"/></symbol>
+</defs></svg>
+
+<!-- ── Cover ───────────────────────────────────────────────── -->
+<div class="cover night" id="cover">
+  <div class="cover-orbit" aria-hidden="true">
+    <svg viewBox="0 0 600 600"><g fill="none" stroke="currentColor">
+      <circle cx="300" cy="300" r="120" stroke-width="1" opacity=".55"/>
+      <circle cx="300" cy="300" r="190" stroke-width="1" opacity=".35" stroke-dasharray="3 7"/>
+      <circle cx="300" cy="300" r="262" stroke-width="1" opacity=".22" stroke-dasharray="2 10"/>
+      <circle cx="420" cy="300" r="5" fill="currentColor" stroke="none" opacity=".9"/>
+      <circle cx="300" cy="110" r="3.5" fill="currentColor" stroke="none" opacity=".6"/>
+      <circle cx="120" cy="360" r="2.8" fill="currentColor" stroke="none" opacity=".45"/>
+    </g></svg>
+  </div>
+  <div class="cover-inner wrap">
+    <p class="kicker an" style="--i:0"><span class="kicker-mark"></span> boost.ai &middot; solution design <span class="k-3">&middot; pre-signature</span></p>
+    <h1 class="cover-title an" style="--i:1">Scope is a <em>decision</em>,<br>not a list.</h1>
+    <p class="cover-sub an" style="--i:2">A voice expansion with a Nordic insurer. Two good years of chat behind it, fifteen use cases in front of it, and one workshop holding the whole thing up.</p>
+    <button class="play-btn an" id="play-btn" style="--i:3">
+      <span class="play-ring" aria-hidden="true"></span>
+      <svg class="play-tri" aria-hidden="true"><use href="#i-play"/></svg>
+      <span class="play-label">Play scope</span>
+    </button>
+    <ul class="cover-meta an" style="--i:4">
+      <li><b>9</b> scenes</li>
+      <li><b>3</b> challenges</li>
+      <li><b>~3</b> min</li>
+      <li class="cover-meta-hint">Space, arrows, Esc</li>
+    </ul>
+  </div>
+  <p class="cover-foot an" style="--i:5">Placeholder narrative &mdash; every figure, name and claim on the following slides is a stand-in to be replaced.</p>
+</div>
+
+<!-- ── Player ──────────────────────────────────────────────── -->
+<main class="stage" id="stage" hidden>
+
+  <header class="hud hud-top">
+    <div class="hud-brand"><span class="hud-dot"></span> <b>boost</b>.ai <span class="hud-sep">/</span> <span class="hud-doc">Scoping</span></div>
+    <div class="hud-chapter" id="hud-chapter">The brief</div>
+    <div class="hud-count"><span id="hud-no">01</span><span class="hud-of">/09</span></div>
+  </header>
+
+  <div class="scenes" id="scenes">
+
+    <!-- 01 ─ THE BRIEF -->
+    <section class="scene" data-dur="11000" data-chapter="The brief">
+      <div class="scene-inner">
+        <p class="scene-kicker an" style="--i:0"><span class="scene-no">01</span> Where we are</p>
+        <h2 class="scene-title an" style="--i:1">Four sentences hold up a whole year of delivery.</h2>
+        <div class="brief">
+          <ol class="brief-list">
+            <li class="rec an" style="--i:2"><span class="rec-ic"><svg><use href="#i-chat"/></svg></span><span class="rec-b"><b>Chat has run well for two years.</b><span class="rec-m">Proven &middot; measured &middot; trusted</span></span></li>
+            <li class="rec an" style="--i:3"><span class="rec-ic"><svg><use href="#i-voice"/></svg></span><span class="rec-b"><b>Voice is the expansion.</b><span class="rec-m">New channel &middot; new failure modes</span></span></li>
+            <li class="rec rec--ghost an" style="--i:4"><span class="rec-ic"><svg><use href="#i-q"/></svg></span><span class="rec-b"><b>&ldquo;Significant automation in year one.&rdquo;</b><span class="rec-m">Verbal &middot; from sales &middot; no number attached</span></span><span class="stamp">unquantified</span></li>
+            <li class="rec rec--ghost an" style="--i:5"><span class="rec-ic"><svg><use href="#i-seat"/></svg></span><span class="rec-b"><b>Scope set in one workshop.</b><span class="rec-m">Digital team only &middot; no contact centre</span></span><span class="stamp stamp--alt">one room</span></li>
+          </ol>
+          <figure class="cases an" style="--i:6">
+            <figcaption class="cases-cap">15 voice use cases selected</figcaption>
+            <div class="cases-grid" id="cases-grid" aria-hidden="true"></div>
+            <p class="cases-note">Selected on the strength of a conversation, not a curve.</p>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 ─ WHAT WE KNOW -->
+    <section class="scene" data-dur="11000" data-chapter="What we know">
+      <div class="scene-inner">
+        <p class="scene-kicker an" style="--i:0"><span class="scene-no">02</span> What we know</p>
+        <h2 class="scene-title an" style="--i:1">Three numbers we can act on. One we can&rsquo;t.</h2>
+        <div class="stats">
+          <div class="stat an" style="--i:2">
+            <span class="stat-ic"><svg><use href="#i-call"/></svg></span>
+            <p class="stat-v"><span class="count" data-to="310" data-suffix="k">0</span></p>
+            <p class="stat-l">calls a month</p>
+            <p class="stat-s">Telephony platform &middot; rolling 12&nbsp;mo</p>
+          </div>
+          <div class="stat an" style="--i:3">
+            <span class="stat-ic"><svg><use href="#i-clock"/></svg></span>
+            <p class="stat-v"><span class="count" data-to="22" data-suffix="%">0</span></p>
+            <p class="stat-l">arrive outside opening hours</p>
+            <p class="stat-s">Today: a recorded message</p>
+            <div class="stat-bar" aria-hidden="true"><span style="--w:22%"></span></div>
+          </div>
+          <div class="stat an" style="--i:4">
+            <span class="stat-ic"><svg><use href="#i-ask"/></svg></span>
+            <p class="stat-v"><span class="count" data-to="41" data-suffix="%">0</span></p>
+            <p class="stat-l">land in &ldquo;General enquiries&rdquo;</p>
+            <p class="stat-s">No intent data underneath</p>
+            <div class="stat-bar" aria-hidden="true"><span style="--w:41%"></span></div>
+          </div>
+          <div class="stat stat--ghost an" style="--i:5">
+            <span class="stat-ic"><svg><use href="#i-coin"/></svg></span>
+            <p class="stat-v"><span class="stat-cur">NOK</span> <span class="count" data-to="42">0</span></p>
+            <p class="stat-l">claimed cost per call</p>
+            <p class="stat-s stat-s--flag"><svg class="mini"><use href="#i-q"/></svg> no source shared</p>
+          </div>
+        </div>
+        <p class="scene-foot an" style="--i:6">Every business case downstream multiplies by that fourth tile. It is the one number nobody can point at.</p>
+      </div>
+    </section>
+
+    <!-- 03 ─ CHALLENGE 1 · THE ROOM -->
+    <section class="scene scene--c1" data-dur="12000" data-chapter="Challenge 01 &middot; The room">
+      <div class="scene-inner">
+        <p class="scene-kicker an" style="--i:0"><span class="scene-no">03</span> <span class="ch ch--1">Challenge 01</span> Where it breaks</p>
+        <h2 class="scene-title an" style="--i:1">The scope was written by the people who don&rsquo;t take the calls.</h2>
+        <div class="room-wrap">
+          <figure class="room-fig">
+          <div class="room an" style="--i:2">
+            <div class="room-table"><span>one workshop</span></div>
+            <ul class="room-seats" id="room-seats"></ul>
+          </div>
+          <figcaption class="room-tally an" style="--i:5"><b>4</b> of <b>8</b> chairs filled</figcaption>
+          </figure>
+          <div class="room-side">
+            <p class="lead an" style="--i:6">Four chairs were filled. Four were empty, and the empty ones hold the operational truth: what actually gets asked, when it spikes, what a repeat call costs, and what legal will not let a bot say.</p>
+            <p class="pull an" style="--i:7">310,000 calls a month, and nobody in the room had heard one.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 ─ CHALLENGE 1 · MEASURE + DATA -->
+    <section class="scene scene--c1" data-dur="13000" data-chapter="Challenge 01 &middot; What we can't measure">
+      <div class="scene-inner">
+        <p class="scene-kicker an" style="--i:0"><span class="scene-no">04</span> <span class="ch ch--1">Challenge 01</span> The other two gaps</p>
+        <h2 class="scene-title an" style="--i:1">No target to hit, and only our own half of the map.</h2>
+        <div class="duo">
+
+          <article class="panel an" style="--i:2">
+            <p class="panel-k"><svg class="mini"><use href="#i-target"/></svg> Gap 02 &middot; the outcome</p>
+            <div class="gauge" aria-hidden="true">
+              <svg viewBox="0 0 200 130">
+                <path class="g-track" d="M18 104a82 82 0 0 1 164 0"/>
+                <path class="g-fill" d="M18 104a82 82 0 0 1 164 0"/>
+                <g class="g-ticks"><path d="M18 104h10M100 22v10M182 104h-10"/></g>
+                <text class="g-lo" x="18" y="122">?</text><text class="g-hi" x="182" y="122">?</text>
+                <circle class="g-hub" cx="100" cy="104" r="6"/>
+                <line class="g-needle" x1="100" y1="104" x2="100" y2="40"/>
+              </svg>
+              <p class="gauge-cap">&ldquo;significant&rdquo;</p>
+            </div>
+            <p class="panel-b">A word is not a target. Nothing here says <i>which</i> calls, by <i>when</i>, against <i>what baseline</i> &mdash; or how use case sixteen gets in once the ink is dry.</p>
+            <ul class="fix">
+              <li class="an" style="--i:5"><svg class="mini"><use href="#i-check"/></svg> One primary number, dated and owned</li>
+              <li class="an" style="--i:6"><svg class="mini"><use href="#i-check"/></svg> A baseline measured before go-live</li>
+              <li class="an" style="--i:7"><svg class="mini"><use href="#i-check"/></svg> A standing intake for use case 16</li>
+            </ul>
+          </article>
+
+          <article class="panel an" style="--i:3">
+            <p class="panel-k"><svg class="mini"><use href="#i-data"/></svg> Gap 03 &middot; the data horizon</p>
+            <div class="horizon" aria-hidden="true">
+              <svg viewBox="0 0 300 226">
+                <circle class="h-outer" cx="150" cy="118" r="94"/>
+                <circle class="h-inner" cx="150" cy="118" r="40"/>
+                <text class="h-in-l" x="150" y="114">chat</text>
+                <text class="h-in-l h-in-s" x="150" y="131">2 years</text>
+                <text class="h-out-l" x="150" y="12">the customer&rsquo;s reality</text>
+              </svg>
+              <ul class="h-chips">
+                <li class="an" style="--i:6">IVR paths</li><li class="an" style="--i:7">WFM peaks</li>
+                <li class="an" style="--i:8">Claims backlog</li><li class="an" style="--i:9">Agent desktop</li>
+                <li class="an" style="--i:10">NPS verbatims</li><li class="an" style="--i:11">Repeat-call rate</li>
+              </ul>
+            </div>
+            <p class="panel-b">We are scoping voice from the one dataset we happen to own. The calls that matter most are the ones chat never saw.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 ─ CHALLENGE 2 · THE GRID -->
+    <section class="scene scene--c2" data-dur="16000" data-chapter="Challenge 02 &middot; The grid">
+      <div class="scene-inner scene-inner--wide">
+        <p class="scene-kicker an" style="--i:0"><span class="scene-no">05</span> <span class="ch ch--2">Challenge 02</span> What good looks like</p>
+        <h2 class="scene-title an" style="--i:1">Put all fifteen on one grid and let the grid argue.</h2>
+        <div class="grid-wrap">
+          <figure class="plot an" style="--i:2">
+            <div class="plot-y">Cost to serve <svg class="mini"><use href="#i-arrow"/></svg></div>
+            <div class="plot-col">
+            <div class="plot-box">
+              <svg class="plot-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                <rect class="q q-tr" x="50" y="0" width="50" height="50"/>
+                <rect class="q q-br" x="50" y="50" width="50" height="50"/>
+                <rect class="q q-tl" x="0" y="0" width="50" height="50"/>
+                <rect class="q q-bl" x="0" y="50" width="50" height="50"/>
+                <g class="plot-rules"><path d="M50 0v100M0 50h100"/></g>
+              </svg>
+              <span class="q-lab q-lab--tl">Assist the agent</span>
+              <span class="q-lab q-lab--tr q-lab--hot">Wave 1 &middot; automate</span>
+              <span class="q-lab q-lab--bl">Park, with a date</span>
+              <span class="q-lab q-lab--br">Wave 2 &middot; deflect</span>
+              <div class="dots" id="dots"></div>
+            </div>
+            <div class="plot-x">Call volume <svg class="mini"><use href="#i-arrow"/></svg></div>
+            <div class="plot-scale"><span>Low</span><span>High</span></div>
+            </div>
+          </figure>
+          <div class="grid-side">
+            <p class="lead an" style="--i:3">Two axes the customer already has numbers for. Volume from telephony, cost to serve from finance &mdash; sourced, not claimed.</p>
+            <ul class="wave-list" id="wave-list"></ul>
+            <p class="pull pull--sm an" style="--i:9">Fifteen became four. The other eleven get a date, not a no.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 ─ CHALLENGE 2 · SIGN-OFF -->
+    <section class="scene scene--c2" data-dur="12000" data-chapter="Challenge 02 &middot; Sign-off">
+      <div class="scene-inner">
+        <p class="scene-kicker an" style="--i:0"><span class="scene-no">06</span> <span class="ch ch--2">Challenge 02</span> Bought in, not just briefed</p>
+        <h2 class="scene-title an" style="--i:1">Scope isn&rsquo;t scoped until the people who own the number sign the number.</h2>
+        <ul class="signs" id="signs"></ul>
+        <p class="scene-foot an" style="--i:8">Same grid, second workshop, full room. Each name signs one line: the use cases in wave one, the baseline, and the date the number is read back.</p>
+      </div>
+    </section>
+
+    <!-- 07 ─ CHALLENGE 3 · NORTH STAR -->
+    <section class="scene scene--c3" data-dur="14000" data-chapter="Challenge 03 &middot; The North Star">
+      <div class="scene-inner">
+        <p class="scene-kicker an" style="--i:0"><span class="scene-no">07</span> <span class="ch ch--3">Challenge 03</span> What it all points at</p>
+        <h2 class="scene-title an" style="--i:1">We already know the North Star. We just haven&rsquo;t said it out loud.</h2>
+        <div class="ns">
+          <div class="ns-star an" style="--i:2" aria-hidden="true">
+            <svg viewBox="0 0 240 240">
+              <g class="ns-rays"><path d="M120 14V2M120 226v12M14 120H2M226 120h12M46.5 46.5l-9.9-9.9M193.5 193.5l9.9 9.9M193.5 46.5l9.9-9.9M46.5 193.5l-9.9 9.9"/></g>
+              <path class="ns-poly" d="M120 34l24 52 57 8-41 40 10 57-50-27-50 27 10-57-41-40 57-8z"/>
+              <circle class="ns-core" cx="120" cy="120" r="9"/>
+            </svg>
+          </div>
+          <blockquote class="ns-quote an" style="--i:3">
+            <p>&ldquo;Any call a customer shouldn&rsquo;t have to make, they don&rsquo;t &mdash; and any call they should, gets a human who already knows why.&rdquo;</p>
+            <cite>Placeholder North Star &mdash; to be written with the customer, in their words</cite>
+          </blockquote>
+        </div>
+        <div class="trace" id="trace"></div>
+      </div>
+    </section>
+
+    <!-- 08 ─ THE ASK -->
+    <section class="scene" data-dur="13000" data-chapter="The ask">
+      <div class="scene-inner">
+        <p class="scene-kicker an" style="--i:0"><span class="scene-no">08</span> Outcome</p>
+        <h2 class="scene-title an" style="--i:1">One ask per post-it. What you need &middot; which team you&rsquo;re asking.</h2>
+        <ul class="notes" id="notes"></ul>
+      </div>
+    </section>
+
+    <!-- 09 ─ CLOSING -->
+    <section class="scene scene--end night" data-dur="14000" data-chapter="Close">
+      <div class="end-orbit" aria-hidden="true"><svg viewBox="0 0 600 600"><g fill="none" stroke="currentColor"><circle cx="300" cy="300" r="150" stroke-width="1" opacity=".4" stroke-dasharray="2 9"/><circle cx="300" cy="300" r="240" stroke-width="1" opacity=".22" stroke-dasharray="2 12"/></g></svg></div>
+      <div class="scene-inner end-inner">
+        <p class="kicker an" style="--i:0"><span class="kicker-mark"></span> 09 &middot; and so</p>
+        <h2 class="end-title an" style="--i:1">Fifteen use cases is an inventory.<br><em>Four, signed, against a number</em> is a scope.</h2>
+        <ul class="end-cols">
+          <li class="an" style="--i:2"><b>01</b> Fill the empty chairs before the ink dries.</li>
+          <li class="an" style="--i:3"><b>02</b> Rank on volume &times; cost, sourced from their systems.</li>
+          <li class="an" style="--i:4"><b>03</b> Point every wave at one North Star, out loud.</li>
+        </ul>
+        <p class="end-ns an" style="--i:5"><svg class="mini"><use href="#i-star"/></svg> Any call a customer shouldn&rsquo;t have to make, they don&rsquo;t.</p>
+        <div class="end-acts an" style="--i:6">
+          <button class="end-btn" data-act="restart"><svg class="mini"><use href="#i-restart"/></svg> Play again</button>
+          <button class="end-btn end-btn--ghost" data-act="exit"><svg class="mini"><use href="#i-close"/></svg> Back to cover</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ── Controls ─────────────────────────────────────────── -->
+  <footer class="hud hud-bottom">
+    <div class="rail" id="rail" role="tablist" aria-label="Scenes"></div>
+    <div class="ctrls">
+      <button class="ctrl" data-act="prev" aria-label="Previous scene"><svg><use href="#i-prev"/></svg></button>
+      <button class="ctrl ctrl--main" data-act="toggle" id="toggle" aria-label="Pause"><svg><use href="#i-pause"/></svg></button>
+      <button class="ctrl" data-act="next" aria-label="Next scene"><svg><use href="#i-next"/></svg></button>
+      <span class="ctrl-sep"></span>
+      <button class="ctrl" data-act="restart" aria-label="Restart"><svg><use href="#i-restart"/></svg></button>
+      <button class="ctrl" data-act="exit" aria-label="Back to cover"><svg><use href="#i-close"/></svg></button>
+    </div>
+  </footer>
+
+</main>
+
+<script src="js/scope.js"></script>
+</body>
+</html>
