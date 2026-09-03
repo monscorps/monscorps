@@ -14,8 +14,10 @@
   --purple:        #59195D;
   --purple-2:      #3E1241;
   --purple-3:      #7A2C80;
+  --purple-4:      #9B4BA1;
   --teal:          #208269;
-  --teal-2:        #36B595;
+  --teal-2:        #2FAF7A;
+  --teal-3:        #45D294;
   --pink:          #E383B7;
   --pink-2:        #D271A5;
   --ochre:         #D5B000;
@@ -23,32 +25,32 @@
   --orange:        #EF8B00;
 
   /* paper */
-  --page:          #FBF8FB;
+  --page:          #F8F2F9;
   --surface:       #FFFFFF;
-  --surface-tint:  #F4EEF4;
-  --surface-brand: #F3E9F4;
-  --surface-teal:  #E7F4F0;
+  --surface-tint:  #F1E7F2;
+  --surface-brand: #EFE1F1;
+  --surface-teal:  #DFF2E8;
 
-  --ink:           #1E1E1E;
-  --ink-2:         #4C4150;
-  --ink-3:         #6E6472;   /* 5.2:1 on paper — every caption and source line */
+  --ink:           #2A0E2E;
+  --ink-2:         #55405A;
+  --ink-3:         #71627A;   /* 5.2:1 on paper — every caption and source line */
 
-  --ghost:         #A895AB;   /* dashed outlines of what is missing */
+  --ghost:         #A88FAC;   /* dashed outlines of what is missing */
   --ghost-ink:     #6E5C72;
 
-  --rule:          #E9DFEA;
-  --rule-strong:   #CDBBCF;
-  --grid-line:     #EFE6F0;
+  --rule:          #E8DAEA;
+  --rule-strong:   #CBB2CE;
+  --grid-line:     #ECE0EE;
 
   /* fixed night palette for cover + close */
-  --night:         #1B0720;
-  --night-2:       #120415;
-  --night-surface: #2A0C2D;
+  --night:         #2A0930;
+  --night-2:       #1A0620;
+  --night-surface: #3D1246;
   --night-ink:     #F7EFF8;
-  --night-ink-2:   #CFB6D4;
-  --night-ink-3:   #9C86A2;
-  --night-rule:    #40204A;
-  --night-mint:    #8EE3C8;
+  --night-ink-2:   #D9C0DE;
+  --night-ink-3:   #A98BB1;
+  --night-rule:    #55265F;
+  --night-mint:    #6FE3AE;
   --night-pink:    #E9A0C8;
 
   --on-brand:      #FFFFFF;
@@ -114,10 +116,10 @@ h1, h2, h3 {
 .kicker-mark {
   width: .55rem; height: .55rem; border-radius: 999px;
   background: var(--night-mint);
-  box-shadow: 0 0 0 4px rgba(142,227,200,.16);
+  box-shadow: 0 0 0 4px rgba(111,227,174,.18);
   animation: pulse 2.6s var(--ease) infinite;
 }
-@keyframes pulse { 0%,100% { box-shadow: 0 0 0 4px rgba(142,227,200,.16); } 50% { box-shadow: 0 0 0 9px rgba(142,227,200,0); } }
+@keyframes pulse { 0%,100% { box-shadow: 0 0 0 4px rgba(111,227,174,.18); } 50% { box-shadow: 0 0 0 9px rgba(111,227,174,0); } }
 
 .lead { font-size: 1.02rem; line-height: 1.62; color: var(--ink-2); max-width: 44ch; }
 .pull {
@@ -133,9 +135,9 @@ h1, h2, h3 {
 .night {
   position: relative;
   background:
-    radial-gradient(ellipse 110% 75% at 74% -8%, rgba(122,44,128,.55), transparent 58%),
-    radial-gradient(ellipse 85% 60% at 12% 112%, rgba(32,130,105,.22), transparent 62%),
-    linear-gradient(180deg, var(--night), var(--night-2));
+    radial-gradient(ellipse 115% 80% at 76% -10%, rgba(155,75,161,.62), transparent 60%),
+    radial-gradient(ellipse 90% 62% at 10% 112%, rgba(47,175,122,.26), transparent 64%),
+    linear-gradient(165deg, #3A1043 0%, var(--night) 45%, var(--night-2) 100%);
   color: var(--night-ink);
 }
 .night::after {
@@ -187,18 +189,18 @@ h1, h2, h3 {
   display: inline-flex; align-items: center; gap: 1rem;
   padding: 1.05rem 2.1rem 1.05rem 1.5rem;
   border-radius: 999px;
-  background: linear-gradient(135deg, var(--teal-2), var(--teal));
+  background: linear-gradient(135deg, var(--teal-3), var(--teal-2) 55%, var(--teal));
   color: #04231B;
-  box-shadow: 0 10px 30px rgba(32,130,105,.36), inset 0 1px 0 rgba(255,255,255,.28);
+  box-shadow: 0 10px 30px rgba(47,175,122,.42), inset 0 1px 0 rgba(255,255,255,.28);
   transition: transform .22s var(--snap), box-shadow .22s var(--ease), gap .22s var(--ease);
 }
-.play-btn:hover { transform: translateY(-2px) scale(1.02); gap: 1.3rem; box-shadow: 0 16px 40px rgba(32,130,105,.46), inset 0 1px 0 rgba(255,255,255,.28); }
+.play-btn:hover { transform: translateY(-2px) scale(1.02); gap: 1.3rem; box-shadow: 0 16px 40px rgba(47,175,122,.55), inset 0 1px 0 rgba(255,255,255,.28); }
 .play-btn:active { transform: translateY(0) scale(.99); }
 .play-tri { width: 1.6rem; height: 1.6rem; }
 .play-label { font-family: var(--display); font-weight: 700; font-size: clamp(1.1rem, 2.2vw, 1.45rem); letter-spacing: -.015em; }
 .play-ring {
   position: absolute; inset: -6px; border-radius: 999px;
-  border: 1.5px solid var(--teal-2); opacity: 0;
+  border: 1.5px solid var(--teal-3); opacity: 0;
   animation: ring 3s var(--ease) infinite;
 }
 @keyframes ring {
@@ -226,7 +228,9 @@ h1, h2, h3 {
 .stage {
   position: fixed; inset: 0; z-index: 10;
   display: grid; grid-template-rows: auto 1fr auto;
-  background: var(--page);
+  background:
+    radial-gradient(ellipse 80% 55% at 88% 4%, rgba(155,75,161,.055), transparent 60%),
+    var(--page);
   transition: background .45s var(--ease);
 }
 
@@ -243,11 +247,11 @@ h1, h2, h3 {
 .stage.is-night .hud-of { color: var(--night-ink-3); }
 .stage.is-night .rail-seg { background: var(--night-rule); }
 .stage.is-night .rail-seg::after { background: var(--night-mint); }
-.stage.is-night .rail-seg.is-done::after { background: #66486F; }
+.stage.is-night .rail-seg.is-done::after { background: #7E4C89; }
 .stage.is-night .rail-seg.is-live::after { background: var(--night-mint); }
 .stage.is-night .ctrl { background: transparent; border-color: var(--night-rule); color: var(--night-ink-2); }
 .stage.is-night .ctrl:hover { color: var(--night-ink); border-color: var(--night-mint); }
-.stage.is-night .ctrl--main { background: var(--night-mint); color: #06231A; border-color: var(--night-mint); box-shadow: 0 4px 14px rgba(142,227,200,.22); }
+.stage.is-night .ctrl--main { background: var(--night-mint); color: #06231A; border-color: var(--night-mint); box-shadow: 0 4px 14px rgba(111,227,174,.26); }
 .stage.is-night .ctrl-sep { background: var(--night-rule); }
 
 /* ── HUD ────────────────────────────────────────────────────── */
@@ -440,7 +444,7 @@ html.js .cover .an {
 .scene.is-live .stat-bar span { animation: barx .9s var(--ease) forwards; animation-delay: .9s; }
 @keyframes barx { to { transform: scaleX(1); } }
 
-.stat--ghost { background: repeating-linear-gradient(135deg, transparent 0 7px, rgba(168,149,171,.07) 7px 14px), var(--surface); }
+.stat--ghost { background: repeating-linear-gradient(135deg, transparent 0 7px, rgba(168,143,172,.10) 7px 14px), var(--surface); }
 .stat--ghost .stat-ic { color: var(--ghost-ink); }
 .stat--ghost .stat-v { color: var(--ghost-ink); }
 .stat--ghost .stat-l { color: var(--ghost-ink); }
@@ -545,7 +549,7 @@ html.js .cover .an {
 
 .horizon { display: grid; justify-items: center; gap: 1rem; }
 .horizon svg { width: min(100%, 18rem); }
-.h-outer { fill: rgba(89,25,93,.03); stroke: var(--ghost); stroke-width: 1.5; stroke-dasharray: 5 7; }
+.h-outer { fill: rgba(89,25,93,.05); stroke: var(--ghost); stroke-width: 1.5; stroke-dasharray: 5 7; }
 .scene.is-live .h-outer { animation: rot 60s linear infinite; transform-origin: 150px 105px; }
 @keyframes rot { to { transform: rotate(360deg); } }
 .h-inner { fill: var(--surface-teal); stroke: var(--teal); stroke-width: 2; }
@@ -589,9 +593,9 @@ html.js .cover .an {
 .q { fill: transparent; transition: fill .6s var(--ease); }
 .plot-rules path { stroke: var(--rule); stroke-width: .35; vector-effect: non-scaling-stroke; }
 .scene.is-live .q-tr { animation: q-hot .8s var(--ease) 3.9s forwards; }
-@keyframes q-hot { to { fill: rgba(32,130,105,.10); } }
+@keyframes q-hot { to { fill: rgba(47,175,122,.13); } }
 .scene.is-live .q-bl { animation: q-cold .8s var(--ease) 4.2s forwards; }
-@keyframes q-cold { to { fill: rgba(168,149,171,.07); } }
+@keyframes q-cold { to { fill: rgba(168,143,172,.09); } }
 
 .q-lab {
   position: absolute; z-index: 3;
@@ -627,8 +631,8 @@ html.js .cover .an {
   animation-delay: calc(var(--i) * 105ms + .8s), 4.4s;
 }
 @keyframes dot-ring {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(32,130,105,.5); }
-  50%      { box-shadow: 0 0 0 7px rgba(32,130,105,0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(47,175,122,.55); }
+  50%      { box-shadow: 0 0 0 7px rgba(47,175,122,0); }
 }
 .dot--park { background: var(--surface); color: var(--ghost-ink); border-color: var(--ghost); border-style: dashed; }
 
