@@ -1,0 +1,592 @@
+<title>Play Scope</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* ─────────────────────────────────────────────────────────────
+   Play Scope — animated scoping explainer
+   Visual grammar: paper-and-ink stage, mono labels, display headlines,
+   one idea per beat, motion used only to show a mechanism.
+   Palette: boost.ai purple + green.
+   ───────────────────────────────────────────────────────────── */
+:root{
+  --plum:#1B0A2B;        /* stage ink */
+  --plum-2:#241038;
+  --surface:#2C1447;
+  --surface-2:#361B55;
+
+  --purple:#8B5CF6;      /* brand purple */
+  --purple-dim:#6D3BD1;
+  --purple-soft:#3A1C5C;
+
+  --green:#22D39A;       /* boost green */
+  --green-dim:#12A87A;
+  --green-soft:#123D33;
+
+  --paper:#F7F3FF;
+  --ink:#F4EEFF;
+  --ink-2:#C9BADF;
+  --ink-3:#9A88B8;
+
+  --rule:#3B2159;
+  --rule-strong:#553383;
+  --warn:#F5A524;
+
+  --display:"Bricolage Grotesque","Arial Black",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --snap:cubic-bezier(.34,1.3,.5,1);
+  --wrap:64rem;
+
+  --grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--plum);color:var(--ink);
+  font-family:var(--display);
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:99;
+  background:var(--grain);opacity:.045;mix-blend-mode:overlay;
+}
+body::after{ /* stage vignette */
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+  background:radial-gradient(120% 90% at 50% 0%,rgba(139,92,246,.20),transparent 60%),
+             radial-gradient(90% 70% at 85% 100%,rgba(34,211,154,.10),transparent 65%);
+}
+.wrap{width:min(var(--wrap),calc(100% - 2.5rem));margin-inline:auto}
+
+/* ── shell ───────────────────────────────────────────────── */
+#stage{position:relative;z-index:2;min-height:100vh;display:grid;grid-template-rows:auto 1fr auto}
+
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.1rem 0}
+.mark{display:flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.7rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.mark b{color:var(--ink);font-weight:600}
+.mark .dot{width:.55rem;height:.55rem;border-radius:50%;background:var(--green);
+  box-shadow:0 0 0 4px rgba(34,211,154,.16)}
+.chip{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);border:1px solid var(--rule);border-radius:999px;padding:.3rem .6rem}
+
+/* ── cover ───────────────────────────────────────────────── */
+.cover{display:grid;place-items:center;text-align:center;padding:clamp(2rem,8vh,6rem) 0}
+.cover .kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--green);margin-bottom:1.4rem}
+.cover h1{
+  font-size:clamp(3rem,11vw,7rem);line-height:.92;letter-spacing:-.03em;font-weight:800;margin:0;
+  background:linear-gradient(100deg,#fff 20%,var(--purple) 60%,var(--green) 105%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.cover .sub{max-width:34rem;margin:1.4rem auto 0;color:var(--ink-2);font-size:1.05rem;line-height:1.55}
+.cover .meta{margin-top:.9rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3)}
+
+.play{
+  --r:132px;
+  margin-top:2.6rem;position:relative;display:inline-flex;align-items:center;gap:.9rem;
+  padding:1.05rem 2.1rem 1.05rem 1.15rem;border:0;cursor:pointer;border-radius:999px;
+  background:linear-gradient(120deg,var(--purple) 0%,var(--purple-dim) 55%,var(--green-dim) 130%);
+  color:#fff;font-family:var(--display);font-weight:700;font-size:1.05rem;letter-spacing:-.01em;
+  box-shadow:0 10px 34px rgba(109,59,209,.45),0 2px 0 rgba(255,255,255,.14) inset;
+  transition:transform .35s var(--snap),box-shadow .35s var(--ease);
+}
+.play:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 16px 46px rgba(109,59,209,.55)}
+.play:active{transform:translateY(0) scale(.99)}
+.play .tri{width:2.5rem;height:2.5rem;border-radius:50%;background:rgba(255,255,255,.16);
+  display:grid;place-items:center;flex:0 0 auto}
+.play .tri svg{width:1rem;height:1rem;fill:#fff;transform:translateX(1px)}
+.play::after{content:"";position:absolute;inset:-6px;border-radius:999px;border:1px solid rgba(34,211,154,.5);
+  animation:pulse 2.6s var(--ease) infinite}
+@keyframes pulse{0%{transform:scale(.98);opacity:.7}70%{transform:scale(1.09);opacity:0}100%{opacity:0}}
+.hint{margin-top:1.1rem;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-3)}
+kbd{font-family:var(--mono);border:1px solid var(--rule-strong);border-radius:4px;padding:0 .3rem;color:var(--ink-2)}
+
+/* ── scenes ──────────────────────────────────────────────── */
+#deck{display:none;position:relative}
+#deck.on{display:block}
+.scene{
+  display:none;min-height:min(78vh,44rem);align-content:center;padding:2rem 0 3rem;
+}
+.scene.live{display:grid}
+.eyebrow{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--green);margin-bottom:1rem}
+.eyebrow .n{color:var(--ink-3)}
+h2{font-size:clamp(2rem,5.2vw,3.4rem);line-height:1.02;letter-spacing:-.025em;font-weight:800;margin:0 0 1rem}
+.lede{max-width:42rem;color:var(--ink-2);font-size:1.05rem;line-height:1.6;margin:0}
+.small{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;color:var(--ink-3)}
+
+/* staged entrance: every direct child of a live scene rises in sequence */
+.scene.live > *{animation:rise .72s var(--ease) both}
+.scene.live > *:nth-child(1){animation-delay:.05s}
+.scene.live > *:nth-child(2){animation-delay:.16s}
+.scene.live > *:nth-child(3){animation-delay:.28s}
+.scene.live > *:nth-child(4){animation-delay:.40s}
+.scene.live > *:nth-child(5){animation-delay:.52s}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* ── cards & grids ───────────────────────────────────────── */
+.grid{display:grid;gap:1rem;margin-top:2rem}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+@media(max-width:760px){.g3,.g2{grid-template-columns:1fr}}
+
+.card{
+  position:relative;background:linear-gradient(180deg,var(--surface),var(--surface-2));
+  border:1px solid var(--rule);border-radius:14px;padding:1.15rem 1.2rem 1.25rem;
+  box-shadow:0 1px 0 rgba(255,255,255,.05) inset;
+}
+.card .lab{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-3);display:flex;align-items:center;gap:.5rem;margin-bottom:.7rem}
+.card h3{margin:0 0 .45rem;font-size:1.12rem;letter-spacing:-.01em;line-height:1.2}
+.card p{margin:0;color:var(--ink-2);font-size:.92rem;line-height:1.5}
+.card.break{border-color:rgba(245,165,36,.35)}
+.card.break .lab{color:var(--warn)}
+.card.good{border-color:rgba(34,211,154,.35)}
+.card.good .lab{color:var(--green)}
+
+/* icon slot */
+.ico{width:2.3rem;height:2.3rem;border-radius:9px;display:grid;place-items:center;flex:0 0 auto;
+  background:var(--purple-soft);border:1px solid var(--rule-strong)}
+.ico svg{width:1.15rem;height:1.15rem;fill:none;stroke:var(--purple);stroke-width:1.7;
+  stroke-linecap:round;stroke-linejoin:round}
+.card.good .ico{background:var(--green-soft);border-color:rgba(34,211,154,.3)}
+.card.good .ico svg{stroke:var(--green)}
+.card.break .ico{background:rgba(245,165,36,.12);border-color:rgba(245,165,36,.3)}
+.card.break .ico svg{stroke:var(--warn)}
+.head{display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem}
+
+/* ── numbers ─────────────────────────────────────────────── */
+.figs{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2rem}
+@media(max-width:860px){.figs{grid-template-columns:repeat(2,1fr)}}
+.fig{border:1px solid var(--rule);border-radius:14px;padding:1.1rem;background:rgba(255,255,255,.02)}
+.fig .v{font-size:clamp(1.8rem,4.4vw,2.6rem);font-weight:800;letter-spacing:-.03em;line-height:1;
+  font-variant-numeric:tabular-nums}
+.fig .v.q{color:var(--warn)}
+.fig .k{margin-top:.55rem;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);line-height:1.5}
+.fig .src{margin-top:.5rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;color:var(--ink-3)}
+.fig .src.no{color:var(--warn)}
+
+/* volume bar: where the 310k actually sits */
+.bar{margin-top:2rem;border:1px solid var(--rule);border-radius:14px;overflow:hidden}
+.bar .track{display:flex;height:3.4rem}
+.bar .seg{display:grid;place-items:center;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;
+  color:#0E0518;font-weight:600;width:0;transition:width 1.1s var(--ease);overflow:hidden;white-space:nowrap}
+.scene.live .bar .seg{width:var(--w)}
+.seg.a{background:var(--green)}
+.seg.b{background:var(--purple)}
+.seg.c{background:var(--purple-soft);color:var(--ink-2)}
+.bar .legend{display:flex;flex-wrap:wrap;gap:1.2rem;padding:.8rem 1rem;border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;color:var(--ink-3)}
+.bar .legend i{display:inline-block;width:.6rem;height:.6rem;border-radius:2px;margin-right:.45rem}
+
+/* ── the funnel: 15 use cases → what survives evidence ───── */
+.funnel{display:grid;gap:.5rem;margin-top:2rem}
+.tile-row{display:flex;flex-wrap:wrap;gap:.4rem}
+.tile{width:2.2rem;height:2.2rem;border-radius:6px;border:1px solid var(--rule-strong);
+  background:var(--purple-soft);display:grid;place-items:center;font-family:var(--mono);font-size:.62rem;
+  color:var(--ink-3);opacity:0;transform:scale(.7)}
+.scene.live .tile{animation:pop .5s var(--snap) both}
+@keyframes pop{to{opacity:1;transform:none}}
+.tile.keep{background:var(--green-soft);border-color:var(--green-dim);color:var(--green)}
+.tile.cut{opacity:.35}
+.scene.live .tile.cut{animation:pop .5s var(--snap) both,fade .6s var(--ease) 1.6s both}
+@keyframes fade{to{opacity:.22;filter:grayscale(1)}}
+
+/* ── post-its (the asks) ─────────────────────────────────── */
+.notes{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}
+@media(max-width:760px){.notes{grid-template-columns:1fr}}
+.note{
+  position:relative;padding:1.15rem 1.1rem 1.3rem;border-radius:4px;color:#1B0A2B;
+  background:linear-gradient(160deg,#EBDDFF,#D8C4FA);
+  box-shadow:0 12px 26px rgba(0,0,0,.35);
+  transform-origin:top center;
+}
+.note:nth-child(2){background:linear-gradient(160deg,#C8F6E5,#A6EBD2);rotate:-1.4deg}
+.note:nth-child(3){rotate:1.1deg}
+.note:nth-child(1){rotate:-.6deg}
+.scene.live .note{animation:stick .6s var(--snap) both}
+.scene.live .note:nth-child(1){animation-delay:.25s}
+.scene.live .note:nth-child(2){animation-delay:.4s}
+.scene.live .note:nth-child(3){animation-delay:.55s}
+@keyframes stick{from{opacity:0;transform:translateY(-16px) rotate(-6deg) scale(.94)}}
+.note .team{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;
+  color:#5B2E9A;margin-bottom:.5rem}
+.note p{margin:0;font-size:.98rem;line-height:1.4;font-weight:600;letter-spacing:-.01em}
+.note .by{margin-top:.7rem;font-family:var(--mono);font-size:.6rem;color:#4A3168;letter-spacing:.06em}
+
+/* ── controls ────────────────────────────────────────────── */
+.controls{display:none;align-items:center;gap:.9rem;padding:1rem 0 1.6rem}
+.controls.on{display:flex}
+.btn{background:transparent;border:1px solid var(--rule-strong);color:var(--ink-2);border-radius:999px;
+  width:2.3rem;height:2.3rem;display:grid;place-items:center;cursor:pointer;
+  transition:border-color .25s,color .25s,background .25s}
+.btn:hover{border-color:var(--green);color:var(--green);background:rgba(34,211,154,.08)}
+.btn svg{width:.95rem;height:.95rem;fill:currentColor}
+.rail{flex:1;display:flex;gap:.35rem}
+.rail .r{flex:1;height:3px;border-radius:2px;background:var(--rule);overflow:hidden}
+.rail .r span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--purple),var(--green))}
+.rail .r.done span{width:100%}
+.rail .r.now span{animation:fill linear forwards}
+@keyframes fill{from{width:0}to{width:100%}}
+.count{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;color:var(--ink-3);
+  font-variant-numeric:tabular-nums}
+
+footer{padding:1.2rem 0 2rem;border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important}
+  .scene.live .bar .seg{width:var(--w)}
+}
+</style>
+
+<div id="stage">
+  <header class="topbar wrap">
+    <div class="mark"><span class="dot"></span><b>boost.ai</b> · solution design</div>
+    <div class="chip">Scoping · pre-signature</div>
+  </header>
+
+  <main>
+    <!-- COVER ------------------------------------------------ -->
+    <section class="cover wrap" id="cover">
+      <div>
+        <div class="kicker">Nordic insurance · voice expansion</div>
+        <h1>Scope it<br>on evidence</h1>
+        <p class="sub">Chat has run for two years. Voice is the expansion, fifteen use cases are
+          already on the list — and nobody has checked what the calls actually are.</p>
+        <p class="meta">6 beats · about 90 seconds</p>
+        <button class="play" id="play" aria-label="Play scope">
+          <span class="tri"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          Play scope
+        </button>
+        <p class="hint"><kbd>space</kbd> pause · <kbd>←</kbd> <kbd>→</kbd> step</p>
+      </div>
+    </section>
+
+    <!-- DECK -------------------------------------------------- -->
+    <div id="deck" class="wrap">
+
+      <!-- 1 · where we are -->
+      <section class="scene" data-ms="9000">
+        <p class="eyebrow"><span class="n">01</span> &nbsp;Where we are</p>
+        <h2>The scope exists. The evidence doesn't.</h2>
+        <p class="lede">Fifteen voice use cases were selected in a single workshop with the digital
+          team. The people who take the calls were not in the room, and sales has already said
+          "significant automation in year one" out loud.</p>
+        <div class="grid g3">
+          <div class="card">
+            <div class="head">
+              <span class="ico"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 1 1-3.2-6.4"/><path d="M8 12h8"/></svg></span>
+              <div class="lab">Two years in</div>
+            </div>
+            <h3>Chat works</h3>
+            <p>A live channel, real containment, real logs. The expansion has a foundation — it is not a greenfield bet.</p>
+          </div>
+          <div class="card break">
+            <div class="head">
+              <span class="ico"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M17 6l4 4M21 6l-4 4"/></svg></span>
+              <div class="lab">One workshop</div>
+            </div>
+            <h3>No reps in the room</h3>
+            <p>Scope was written by people who don't hear the calls. Every use case is a guess about somebody else's day.</p>
+          </div>
+          <div class="card break">
+            <div class="head">
+              <span class="ico"><svg viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M5 8l7-5 7 5"/><path d="M4 20h16"/></svg></span>
+              <div class="lab">Said, not signed</div>
+            </div>
+            <h3>A verbal promise</h3>
+            <p>"Significant automation in year one" is now the customer's expectation — with no number attached to it.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2 · what we know -->
+      <section class="scene" data-ms="10000">
+        <p class="eyebrow"><span class="n">02</span> &nbsp;What we know</p>
+        <h2>Four numbers. Two of them are claims.</h2>
+        <div class="figs">
+          <div class="fig"><div class="v" data-to="310" data-suffix="k">0</div>
+            <div class="k">Calls a month</div><div class="src">Source: customer telephony</div></div>
+          <div class="fig"><div class="v" data-to="22" data-suffix="%">0</div>
+            <div class="k">Arrive outside opening hours</div><div class="src">Recorded message today</div></div>
+          <div class="fig"><div class="v q" data-to="41" data-suffix="%">0</div>
+            <div class="k">Land in "general enquiries"</div><div class="src no">No intent data</div></div>
+          <div class="fig"><div class="v q" data-to="42" data-prefix="NOK ">0</div>
+            <div class="k">Claimed cost per call</div><div class="src no">No source shared</div></div>
+        </div>
+        <div class="bar">
+          <div class="track">
+            <div class="seg a" style="--w:22%">22% after hours</div>
+            <div class="seg b" style="--w:41%">41% unknown intent</div>
+            <div class="seg c" style="--w:37%">37% routed today</div>
+          </div>
+          <div class="legend">
+            <span><i style="background:var(--green)"></i>Answerable with no agent at all</span>
+            <span><i style="background:var(--purple)"></i>Cannot be scoped until it is labelled</span>
+            <span><i style="background:var(--purple-soft)"></i>Known intents, existing routing</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3 · where it breaks -->
+      <section class="scene" data-ms="10000">
+        <p class="eyebrow"><span class="n">03</span> &nbsp;Where this moment actually breaks</p>
+        <h2>A scope priced on a number nobody owns.</h2>
+        <div class="grid g3">
+          <div class="card break">
+            <div class="head"><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 4v9"/><circle cx="12" cy="18" r=".6"/><path d="M3 20h18L12 3 3 20z"/></svg></span>
+              <div class="lab">Break 01</div></div>
+            <h3>41% is not a use case</h3>
+            <p>"General enquiries" is a routing failure, not an intent. Four in ten calls cannot be
+              designed for until somebody listens to a sample and labels them.</p>
+          </div>
+          <div class="card break">
+            <div class="head"><span class="ico"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h10M4 17h7"/><path d="M17 15l4 4M21 15l-4 4"/></svg></span>
+              <div class="lab">Break 02</div></div>
+            <h3>15 use cases, one workshop</h3>
+            <p>Breadth without depth. Fifteen half-built flows land worse than four that close the
+              loop — and they multiply the integration surface before signature.</p>
+          </div>
+          <div class="card break">
+            <div class="head"><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 2v20"/><path d="M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+              <div class="lab">Break 03</div></div>
+            <h3>NOK 42 with no source</h3>
+            <p>The whole business case rests on it. If the real figure is 78, we under-promised;
+              if it's 21, year one fails on arithmetic we agreed to in advance.</p>
+          </div>
+        </div>
+        <p class="small" style="margin-top:1.4rem">The risk is not that voice won't work. It is that
+          success gets measured against a sentence said in a sales meeting.</p>
+      </section>
+
+      <!-- 4 · what good looks like -->
+      <section class="scene" data-ms="10000">
+        <p class="eyebrow"><span class="n">04</span> &nbsp;What good looks like</p>
+        <h2>Four use cases that close. Not fifteen that open.</h2>
+        <div class="funnel">
+          <div class="tile-row" id="tiles"></div>
+        </div>
+        <div class="grid g3">
+          <div class="card good">
+            <div class="head"><span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+              <div class="lab">Start here</div></div>
+            <h3>After hours first</h3>
+            <p>22% of calls meet a recorded message. Anything answered there is pure gain —
+              no deflection argument, no agent displaced.</p>
+          </div>
+          <div class="card good">
+            <div class="head"><span class="ico"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h11"/><circle cx="19" cy="18" r="2.5"/></svg></span>
+              <div class="lab">Then</div></div>
+            <h3>Label the 41%</h3>
+            <p>A two-week listening sample with contact centre reps turns the biggest unknown
+              into the next three use cases, chosen by volume.</p>
+          </div>
+          <div class="card good">
+            <div class="head"><span class="ico"><svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M8 19v-6M13 19v-10M18 19V8"/></svg></span>
+              <div class="lab">Before signature</div></div>
+            <h3>One agreed baseline</h3>
+            <p>Cost per call, containment definition and the measurement window written down and
+              countersigned — so year one is scored against a shared number.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5 · the asks -->
+      <section class="scene" data-ms="11000">
+        <p class="eyebrow"><span class="n">05</span> &nbsp;What we need, and from which team</p>
+        <h2>One ask per post-it.</h2>
+        <div class="notes">
+          <div class="note">
+            <div class="team">Customer · contact centre</div>
+            <p>Two reps in the next scoping session, plus 200 recorded calls from "general enquiries" to label.</p>
+            <div class="by">Needed before scope is frozen</div>
+          </div>
+          <div class="note">
+            <div class="team">Customer · finance</div>
+            <p>The source behind NOK 42 per call — or a jointly agreed figure we both sign.</p>
+            <div class="by">Blocks the business case</div>
+          </div>
+          <div class="note">
+            <div class="team">boost.ai · sales</div>
+            <p>Replace "significant automation" with a written year-one target tied to the four use cases.</p>
+            <div class="by">Blocks signature</div>
+          </div>
+        </div>
+        <p class="small" style="margin-top:1.6rem">Each ask names what is needed and who is being
+          asked. Nothing here delays the deal — it decides what the deal is measured on.</p>
+      </section>
+
+      <!-- 6 · close -->
+      <section class="scene" data-ms="9000">
+        <p class="eyebrow"><span class="n">06</span> &nbsp;The move</p>
+        <h2>Narrow the scope, widen the evidence.</h2>
+        <p class="lede">Ship four voice use cases anchored on after-hours volume, label the 41%
+          with the people who hear it, and sign one baseline before anyone signs the contract.</p>
+        <div class="grid g2">
+          <div class="card good">
+            <div class="head"><span class="ico"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg></span>
+              <div class="lab">Outcome</div></div>
+            <h3>A scope that survives month three</h3>
+            <p>Fewer flows, each one closing an intent end to end, measured against a number both
+              sides put their name on.</p>
+          </div>
+          <div class="card">
+            <div class="head"><span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg></span>
+              <div class="lab">Next session</div></div>
+            <h3>Second workshop, right room</h3>
+            <p>Digital team plus contact centre reps, working from labelled calls rather than
+              a list written in advance.</p>
+          </div>
+        </div>
+        <p class="small" style="margin-top:1.5rem">Placeholder narrative — structure and motion are
+          the deliverable; copy is yours to replace.</p>
+      </section>
+    </div>
+
+    <div class="controls wrap" id="controls">
+      <button class="btn" id="prev" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M15 5l-8 7 8 7z"/></svg></button>
+      <button class="btn" id="toggle" aria-label="Pause"><svg viewBox="0 0 24 24" id="ticon"><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg></button>
+      <button class="btn" id="next" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M9 5l8 7-8 7z"/></svg></button>
+      <div class="rail" id="rail"></div>
+      <div class="count" id="count">01 / 06</div>
+      <button class="btn" id="restart" aria-label="Replay"><svg viewBox="0 0 24 24"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/></svg></button>
+    </div>
+  </main>
+
+  <footer class="wrap">
+    <span>boost.ai · scoping explainer</span>
+    <span>Placeholder content · v0.1</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var deck = document.getElementById('deck');
+  var scenes = [].slice.call(deck.querySelectorAll('.scene'));
+  var rail = document.getElementById('rail');
+  var countEl = document.getElementById('count');
+  var controls = document.getElementById('controls');
+  var cover = document.getElementById('cover');
+  var ticon = document.getElementById('ticon');
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var i = -1, timer = null, paused = false;
+
+  // fifteen use cases in, four survive the evidence test
+  var tiles = document.getElementById('tiles');
+  for (var t = 1; t <= 15; t++){
+    var d = document.createElement('div');
+    d.className = 'tile ' + (t <= 4 ? 'keep' : 'cut');
+    d.textContent = t;
+    d.style.animationDelay = (0.1 + t * 0.045) + 's';
+    tiles.appendChild(d);
+  }
+
+  scenes.forEach(function(){
+    var r = document.createElement('div'); r.className = 'r';
+    r.appendChild(document.createElement('span'));
+    rail.appendChild(r);
+  });
+  var bars = [].slice.call(rail.children);
+
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
+
+  function countUp(el){
+    var to = +el.dataset.to, pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
+    if (reduced){ el.textContent = pre + to + suf; return; }
+    var start = performance.now(), dur = 1100;
+    (function step(now){
+      var p = Math.min(1, (now - start) / dur);
+      var e = 1 - Math.pow(1 - p, 3);
+      el.textContent = pre + Math.round(to * e) + suf;
+      if (p < 1) requestAnimationFrame(step);
+    })(start);
+  }
+
+  function show(n){
+    if (n < 0 || n >= scenes.length) return;
+    clearTimeout(timer);
+    if (i >= 0) scenes[i].classList.remove('live');
+    i = n;
+    var s = scenes[i];
+    s.classList.add('live');
+    countEl.textContent = pad(i + 1) + ' / ' + pad(scenes.length);
+
+    bars.forEach(function(b, k){
+      b.className = 'r' + (k < i ? ' done' : '');
+      b.firstChild.style.animation = 'none';
+    });
+
+    var ms = +s.dataset.ms || 9000;
+    if (!reduced){
+      var live = bars[i].firstChild;
+      void live.offsetWidth;
+      bars[i].classList.add('now');
+      live.style.animation = 'fill ' + ms + 'ms linear forwards';
+      live.style.animationPlayState = paused ? 'paused' : 'running';
+    } else {
+      bars[i].classList.add('done');
+    }
+
+    s.querySelectorAll('[data-to]').forEach(countUp);
+
+    if (!paused && !reduced) timer = setTimeout(function(){
+      i + 1 < scenes.length ? show(i + 1) : stopAtEnd();
+    }, ms);
+  }
+
+  function stopAtEnd(){
+    paused = true;
+    ticon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+  }
+
+  function setPaused(p){
+    paused = p;
+    ticon.innerHTML = p ? '<path d="M8 5v14l11-7z"/>' : '<path d="M7 5h3v14H7zM14 5h3v14h-3z"/>';
+    var live = bars[i] && bars[i].firstChild;
+    if (live) live.style.animationPlayState = p ? 'paused' : 'running';
+    if (p) clearTimeout(timer);
+    else show(i);
+  }
+
+  function start(){
+    cover.style.display = 'none';
+    deck.classList.add('on');
+    controls.classList.add('on');
+    paused = false;
+    if (reduced){ scenes.forEach(function(s){ s.classList.add('live'); });
+      scenes.forEach(function(s){ s.querySelectorAll('[data-to]').forEach(countUp); });
+      countEl.textContent = pad(scenes.length) + ' / ' + pad(scenes.length);
+      bars.forEach(function(b){ b.className = 'r done'; });
+      return;
+    }
+    show(0);
+    deck.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  document.getElementById('play').addEventListener('click', start);
+  document.getElementById('next').addEventListener('click', function(){ setPaused(true); show(Math.min(i+1, scenes.length-1)); });
+  document.getElementById('prev').addEventListener('click', function(){ setPaused(true); show(Math.max(i-1, 0)); });
+  document.getElementById('toggle').addEventListener('click', function(){ setPaused(!paused); });
+  document.getElementById('restart').addEventListener('click', function(){ paused = false;
+    ticon.innerHTML = '<path d="M7 5h3v14H7zM14 5h3v14h-3z"/>'; show(0); });
+
+  addEventListener('keydown', function(e){
+    if (!deck.classList.contains('on')){
+      if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); start(); }
+      return;
+    }
+    if (e.key === ' '){ e.preventDefault(); setPaused(!paused); }
+    if (e.key === 'ArrowRight'){ setPaused(true); show(Math.min(i+1, scenes.length-1)); }
+    if (e.key === 'ArrowLeft'){ setPaused(true); show(Math.max(i-1, 0)); }
+  });
+})();
+</script>
